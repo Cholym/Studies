@@ -41,6 +41,10 @@ test_5_2:
 	@chmod +x test_5_2.sh
 	@./test_5_2.sh
 
+test_5_3:
+	@chmod +x test_5_3.sh
+	@./test_5_3.sh
+
 test_4_2: topic_4_2
 	@./topic_4_2
 	@./topic_4_2
