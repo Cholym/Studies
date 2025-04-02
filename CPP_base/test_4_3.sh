@@ -29,10 +29,8 @@ for ((i=0; i<${#test_cases[@]}; i++)); do
     
     input_string=${input_string%\\n}
     
-    # Запускаем программу и сохраняем её вывод
     result=$(echo -e "$input_string" | ./topic_4_3)
     
-    # Извлекаем интересующий нас вывод
     actual_output=$(echo "$result" | grep -oP 'Минимальное максимальное значение.*')
     
     if [[ "$actual_output" == "${expected_outputs[$i]}" ]]; then
