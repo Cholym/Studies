@@ -1,5 +1,7 @@
 #include <iostream>
 
+// Задание 3.2
+
 #define MAX_SIZE 1024
 
 using std::cin;

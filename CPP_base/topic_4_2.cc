@@ -3,6 +3,8 @@
 #include <random>
 #include <vector>
 
+// Задание 2.1
+
 using std::vector;
 
 double max_sum(const vector<double>& arr) {

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <limits>
 
+// Задание 1.1
+
 double calc_func(double x) {
   const double pi = 3.14159265358979323846;
   return 4 * exp(-0.5 * x) * cos(pi * x);

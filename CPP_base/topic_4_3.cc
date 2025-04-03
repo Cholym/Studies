@@ -1,5 +1,7 @@
 #include <iostream>
 
+// Задание 2.2
+
 using std::cin;
 using std::cout;
 using std::endl;
@@ -8,7 +10,6 @@ int main() {
   int n, m;
   cout << "Введите размеры массива (n × m): ";
   cin >> n >> m;
-
   cout << "Введите значения массива:" << endl;
   int a[n][m], max_in_rows[n], min;
 
@@ -38,9 +39,7 @@ int main() {
       }
     }
   }
-
   cout << "Минимальное максимальное значение находится в ячейке [" << row_index
        << "][" << col_index << "] и равно " << min << endl;
-
   return 0;
 }

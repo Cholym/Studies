@@ -32,7 +32,7 @@ for ((i=0; i<${#test_cases[@]}; i++)); do
     result=$(echo -e "$input_string" | ./topic_5_3)
     
     actual_output=$(echo "$result" | grep -vE '^Введите')
-    
+    actual_output=$(echo "$actual_output" | grep -v 'Ваш результат:')
     actual_output=$(echo "$actual_output" | tr -d '\n' | xargs)
 
     if [[ "$actual_output" == "${expected_outputs[$i]}" ]]; then

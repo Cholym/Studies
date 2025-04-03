@@ -1,5 +1,7 @@
 #include <iostream>
 
+// Задание 3.1
+
 #define n 10
 
 using std::cin;
