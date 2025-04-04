@@ -23,8 +23,17 @@ int main() {
   // Запись в файл
   char choice = 'y';
   while (choice == 'y' || choice == 'Y') {
-    cout << "Введите число: ";
-    cin >> d;
+    bool is_valid = false;
+    do {
+      cout << "Введите число: ";
+      if (!(cin >> d)) {
+        cout << "Ошибка ввода. Пожалуйста, введите число." << endl;
+        cin.clear();
+        cin.ignore(32767, '\n');
+      } else
+        is_valid = true;
+    } while (!is_valid);
+    
     ofs << d << endl;
     cout << "Продолжить ввод (y/n)? ";
     cin >> choice;
