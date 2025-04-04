@@ -75,11 +75,6 @@ test_7_1:
 	@chmod +x test_7_1.sh
 	@./test_7_1.sh
 
-# тест задания 4.2
-test_7_2:
-	@chmod +x test_7_2.sh
-	@./test_7_2.sh
-
 clean:
 	@rm -rf topic_3
 	@rm -rf topic_4_2
