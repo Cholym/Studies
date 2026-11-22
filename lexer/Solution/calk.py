@@ -26,7 +26,6 @@ t_T_And      = r'&&'
 t_T_Or       = r'\|\|'
 t_T_Dims     = r'\[\]'
 
-
 # числовые константы и преобразование значений
 def t_T_DoubleConstant(t):
     r'\d+\.\d*([eE][+-]?\d+)?'
@@ -48,8 +47,9 @@ t_ignore = " \t\r"
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")
-    t.lexer.line_start = t.lexpos + len(t.value[0])
-    
+    # t.lexer.line_start = t.lexpos + len(t.value[0]) исправлено, что изменения проявлялись на однострочной строке
+    t.lexer.line_start = t.lexpos + len(t.value)
+
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
@@ -60,6 +60,25 @@ lexer = lex.lex()
 
 VALUE_TOKENS = {'T_IntConstant', 'T_DoubleConstant',
                 'T_StringConstant', 'T_BoolConstant'}
+
+# добавлен словарь для render
+_VALUE = {
+    'T_IntConstant':    lambda v: "%d" % v,
+    'T_DoubleConstant': lambda v: "%g" % v,
+    'T_StringConstant': lambda v: v,
+    'T_BoolConstant':   lambda v: v,
+}
+
+# сравнивает вывод
+def render(tok):
+    lexeme   = tok.lexeme if hasattr(tok, 'lexeme') else tok.value
+    type_str = "'%s'" % tok.type if len(tok.type) == 1 else tok.type
+    fmt      = _VALUE.get(tok.type)
+    value_part = "(value = %s)" % fmt(tok.value) if fmt else ""
+    c1 = tok.lexpos - getattr(lexer, 'line_start', 0) + 1
+    c2 = c1 + len(lexeme) - 1
+    print("%-13s line %d cols %d-%d is %s %s"
+          % (lexeme, tok.lineno, c1, c2, type_str, value_part))
     
 if __name__=="__main__":
     # data = '+ [] <= != ;'
@@ -71,4 +90,5 @@ if __name__=="__main__":
     while True:
         tok = lexer.token() # читаем следующий токен
         if not tok: break      # закончились печеньки
-        print ( tok )
+        # print ( tok )
+        render ( tok )
