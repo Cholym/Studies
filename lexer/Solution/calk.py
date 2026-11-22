@@ -42,6 +42,11 @@ def t_T_IntConstant(t):
         t.value = int(t.value)
     return t
 
+def t_T_StringConstant(t):
+    r'"[^"\n]*"'
+    t.lexeme = t.value
+    return t
+
 t_ignore = " \t\r"
 
 def t_newline(t):
@@ -82,7 +87,8 @@ def render(tok):
     
 if __name__=="__main__":
     # data = '+ [] <= != ;'
-    data = '0 001 0x0 0X12aE 0x1AeF 12. .12 12.E+2 3.1415E+3 12e5 8'
+    # data = '0 001 0x0 0X12aE 0x1AeF 12. .12 12.E+2 3.1415E+3 12e5 8'
+    data = '"valid" "" " "'
 
     lexer.input(data)
     lexer.line_start = 0
