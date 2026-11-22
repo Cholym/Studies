@@ -1,4 +1,5 @@
-
+import os
+import sys
 
 # -----------------------------------------------------------------------------
 # calc.py
@@ -120,17 +121,23 @@ def render(tok):
     print("%-13s line %d cols %d-%d is %s %s"
           % (lexeme, tok.lineno, c1, c2, type_str, value_part))
     
-if __name__=="__main__":
-    # data = '+ [] <= != ;'
-    # data = '0 001 0x0 0X12aE 0x1AeF 12. .12 12.E+2 3.1415E+3 12e5 8'
-    # data = '"valid" "" " "'
-    data = 'voidB classs newarray TRUE False True # $ & ? @ ^ ~ /* unterminated'
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Введите команду: python calk.py <имя файла>")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+    if not os.path.exists(filename):
+        print(f"Ошибка: файл '{filename}' не найден")
+        sys.exit(1)
+
+    with open(filename, 'r', encoding='utf-8') as f:
+        data = f.read()
 
     lexer.input(data)
     lexer.line_start = 0
 
     while True:
-        tok = lexer.token() # читаем следующий токен
-        if not tok: break      # закончились печеньки
-        # print ( tok )
-        render ( tok )
+        tok = lexer.token()
+        if not tok: break
+        render(tok)
