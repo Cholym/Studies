@@ -16,6 +16,17 @@ tokens = (
     'T_LE','T_GE','T_Equal','T_NotEqual','T_And','T_Or','T_Dims',
 )
 
+reserved = {
+    'void': 'T_Void', 'int': 'T_Int', 'double': 'T_Double', 'bool': 'T_Bool',
+    'string': 'T_String', 'class': 'T_Class', 'interface': 'T_Interface',
+    'null': 'T_Null', 'this': 'T_This', 'extends': 'T_Extends',
+    'implements': 'T_Implements', 'for': 'T_For', 'while': 'T_While',
+    'if': 'T_If', 'else': 'T_Else', 'return': 'T_Return', 'break': 'T_Break',
+    'new': 'T_New', 'NewArray': 'T_NewArray', 'Print': 'T_Print',
+    'ReadInteger': 'T_ReadInteger', 'ReadLine': 'T_ReadLine',
+    'true': 'T_BoolConstant', 'false': 'T_BoolConstant',
+}
+
 literals = '+-*/%<>!=;,.[](){}'
 
 t_T_LE       = r'<='
@@ -47,6 +58,29 @@ def t_T_StringConstant(t):
     t.lexeme = t.value
     return t
 
+def t_T_Identifier(t):
+    r'[a-zA-Z][a-zA-Z0-9_]*'
+    t.lexeme = t.value
+    if len(t.value) > 31:
+        print(f"*** Error line {t.lineno}.")
+        print(f'*** Identifier too long: "{t.value}"')
+    else:
+        t.type = reserved.get(t.value, 'T_Identifier')
+    return t
+
+def t_COMMENT_SINGLE(t):
+    r'//[^\n]*'
+
+def t_COMMENT_MULTI(t):
+    r'/\*(.|\n)*?\*/'
+    t.lexer.lineno += t.value.count('\n')
+
+def t_COMMENT_UNTERMINATED(t):
+    r'/\*(.|\n)*'
+    t.lexer.lineno += t.value.count('\n')
+    print(f"*** Error line {t.lineno}.")
+    print("*** Unterminated block comment")
+
 t_ignore = " \t\r"
 
 def t_newline(t):
@@ -56,7 +90,8 @@ def t_newline(t):
     t.lexer.line_start = t.lexpos + len(t.value)
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    print(f"*** Error line {t.lineno}.")
+    print(f"*** Unrecognized char: '{t.value[0]}'")
     t.lexer.skip(1)
     
 # Build the lexer
@@ -88,7 +123,8 @@ def render(tok):
 if __name__=="__main__":
     # data = '+ [] <= != ;'
     # data = '0 001 0x0 0X12aE 0x1AeF 12. .12 12.E+2 3.1415E+3 12e5 8'
-    data = '"valid" "" " "'
+    # data = '"valid" "" " "'
+    data = 'voidB classs newarray TRUE False True # $ & ? @ ^ ~ /* unterminated'
 
     lexer.input(data)
     lexer.line_start = 0
