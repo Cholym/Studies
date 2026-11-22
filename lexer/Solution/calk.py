@@ -26,28 +26,8 @@ t_T_And      = r'&&'
 t_T_Or       = r'\|\|'
 t_T_Dims     = r'\[\]'
 
-# Tokens
-
-t_PLUS    = r'\+'
-t_MINUS   = r'-'
-t_TIMES   = r'\*'
-t_DIVIDE  = r'/'
-t_EQUALS  = r'='
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
-t_NAME    = r'[a-zA-Z_][a-zA-Z0-9_]*'
-
-def t_NUMBER(t):
-    r'\d+'
-    try:
-        t.value = int(t.value)
-    except ValueError:
-        print("Integer value too large %d", t.value)
-        t.value = 0
-    return t
-
 # Ignored characters
-t_ignore = " \t"
+t_ignore = " \t\r"
 
 def t_newline(t):
     r'\n+'
@@ -62,7 +42,7 @@ import ply.lex as lex
 lexer = lex.lex()
 
 if __name__=="__main__":
-    data = ' 123 + 345 * ( 45 - 33) / 2334 '
+    data = '+ [] <= != ;'
     lexer.input(data)
     while True:
         tok = lexer.token() # читаем следующий токен
