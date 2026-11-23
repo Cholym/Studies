@@ -1,0 +1,11 @@
+a123456789012345678901234567890 line 1 cols 1-31 is T_Identifier 
+
+*** Error line 2.
+*** Identifier too long: "a1234567890123456789012345678901"
+
+a1234567890123456789012345678901 line 2 cols 1-32 is T_Identifier (truncated to a123456789012345678901234567890)
+
+*** Error line 3.
+*** Unrecognized char: '_'
+
+underscore   line 3 cols 2-11 is T_Identifier 

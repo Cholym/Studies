@@ -1,2 +1,0 @@
-❌ РАСХОЖДЕНИЕ: Solution/lexer_tests/badbool.frag vs Solution/lexer_tests/badbool.out
-  Строк в выводе: 4, в эталоне: 4
